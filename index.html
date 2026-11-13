@@ -197,7 +197,7 @@ async function askCyberShieldAI(question){
   out.textContent=answer;
  }catch(error){
   assistantHistory.pop();
-  out.textContent='AI connection unavailable: '+(error.message||'Please try again later.')+' If this is the first setup, ask the site owner to add the OPENAI_API_KEY environment variable in Vercel and redeploy.';
+  out.textContent='CyberShield AI is temporarily unavailable. Please try again later. You can still use the other CyberShield safety tools.';
  }finally{
   button.disabled=false;
   button.textContent='Ask CyberShield AI';
