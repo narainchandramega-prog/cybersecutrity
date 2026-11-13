@@ -90,7 +90,7 @@ module.exports = async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || 'gpt-6-luna',
+        model: process.env.OPENAI_MODEL || 'gpt-5.5',
         instructions,
         input: messages,
         max_output_tokens: 650
