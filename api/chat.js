@@ -99,10 +99,20 @@ module.exports = async function handler(req, res) {
 
     const data = await upstream.json().catch(() => ({}));
     if (!upstream.ok) {
-      const message = upstream.status === 429
-        ? 'The AI service is busy or its usage limit has been reached. Please try again later.'
-        : 'The AI provider could not complete the request. Please try again later.';
-      return res.status(upstream.status === 429 ? 429 : 502).json({ error: message });
+      const providerError = data && data.error ? data.error : {};
+      const providerCode = typeof providerError.code === 'string' ? providerError.code : '';
+      let message = 'The AI provider could not complete the request. Please try again later.';
+      if (upstream.status === 401) message = 'The API key was rejected. Check that the complete, correct key was saved in Vercel, then redeploy.';
+      else if (upstream.status === 403) message = 'The API project or key does not have permission to use this model. Check the project and key permissions.';
+      else if (upstream.status === 404) message = 'The selected AI model is unavailable to this API project. Check the OPENAI_MODEL setting.';
+      else if (upstream.status === 429) message = providerCode === 'insufficient_quota'
+        ? 'The API project has no available usage quota. Ask the account owner to check API billing and usage limits.'
+        : 'The AI service is rate-limited. Please wait a little and try again.';
+      else if (upstream.status === 400) message = 'The AI request was rejected. Check the model setting and API project access.';
+      return res.status(502).json({
+        error: message,
+        diagnostic: { providerStatus: upstream.status, providerCode: providerCode || 'not_provided', requestId: upstream.headers.get('x-request-id') || null }
+      });
     }
 
     let answer = typeof data.output_text === 'string' ? data.output_text.trim() : '';
