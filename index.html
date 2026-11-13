@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberShield | Digital Safety</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #071426;
+  color: white;
+}
+
+header {
+  padding: 22px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0d2039;
+}
+
+.logo {
+  color: #39d5c5;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 18px;
+}
+
+.hero {
+  text-align: center;
+  padding: 85px 20px;
+  background: linear-gradient(135deg,#102b4b,#071426);
+}
+
+.hero h1 {
+  font-size: 44px;
+  margin-bottom: 18px;
+}
+
+.hero h1 span {
+  color: #39d5c5;
+}
+
+.hero p {
+  color: #c3d1e0;
+  line-height: 1.7;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 14px 25px;
+  border: none;
+  border-radius: 8px;
+  background: #39d5c5;
+  color: #071426;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.section {
+  padding: 55px 8%;
+  text-align: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.card {
+  background: #10243e;
+  border: 1px solid #24405d;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.card h3 {
+  color: #39d5c5;
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: #bdcada;
+  line-height: 1.6;
+}
+
+.checker {
+  max-width: 650px;
+  margin: auto;
+  background: #10243e;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+textarea {
+  width: 100%;
+  height: 130px;
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #45617d;
+  background: #071426;
+  color: white;
+  font-size: 16px;
+}
+
+#result {
+  margin-top: 20px;
+  line-height: 1.8;
+}
+
+.score {
+  font-size: 35px;
+  color: #39d5c5;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #aabbd0;
+  background: #0d2039;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🛡 CyberShield</div>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="#checker">Scam Checker</a>
+    <a href="#learn">Learn</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Your Digital World.<br><span>Your Protection.</span></h1>
+  <p>Detect suspicious messages, understand online risks<br>
+  and learn how to stay safe in the digital world.</p>
+  <a href="#checker"><button class="btn">Check a Message</button></a>
+</section>
+
+<section class="section" id="features">
+  <h2>Explore CyberShield</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>📩 Scam Detection</h3>
+      <p>Check suspicious messages and identify warning signs.</p>
+    </div>
+    <div class="card">
+      <h3>🔗 Website Safety</h3>
+      <p>Learn how to recognise suspicious website links.</p>
+    </div>
+    <div class="card">
+      <h3>📷 QR Safety</h3>
+      <p>Understand the risks of unknown QR codes.</p>
+    </div>
+    <div class="card">
+      <h3>🎬 Media Awareness</h3>
+      <p>Learn about manipulated images and AI-generated media.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="checker">
+  <h2>AI Scam Message Checker</h2>
+  <p>Paste a message below to check for common warning signs.</p>
+
+  <div class="checker">
+    <textarea id="message"
+      placeholder="Paste your suspicious message here..."></textarea>
+
+    <button class="btn" onclick="checkMessage()">
+      Analyse Message
+    </button>
+
+    <div id="result"></div>
+  </div>
+</section>
+
+<section class="section" id="learn">
+  <h2>Cyber Safety Academy 🎓</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>OTP Safety</h3>
+      <p>Never share your OTP or password with anyone.</p>
+    </div>
+    <div class="card">
+      <h3>Link Safety</h3>
+      <p>Check website addresses before entering personal details.</p>
+    </div>
+    <div class="card">
+      <h3>Online Awareness</h3>
+      <p>Be careful with unexpected prizes and urgent payment requests.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  CyberShield © 2026 | Stay Alert. Stay Protected.
+</footer>
+
+<script>
+function checkMessage() {
+  const message = document.getElementById("message")
+    .value.toLowerCase();
+
+  let score = 0;
+  let warnings = [];
+
+  const rules = [
+    { words: ["otp", "password", "pin"], points: 30,
+      warning: "Requests sensitive login information" },
+    { words: ["urgent", "immediately", "account blocked"], points: 20,
+      warning: "Uses urgency or threats" },
+    { words: ["lottery", "winner", "prize", "reward"], points: 20,
+      warning: "Unexpected prize or reward claim" },
+    { words: ["send money", "transfer money", "payment"], points: 20,
+      warning: "Requests a money transfer" },
+    { words: ["click here", "verify account", "claim now"], points: 15,
+      warning: "Encourages an unexpected action" }
+  ];
+
+  if (!message.trim()) {
+    document.getElementById("result").innerHTML =
+      "Please enter a message first.";
+    return;
+  }
+
+  rules.forEach(rule => {
+    if (rule.words.some(word => message.includes(word))) {
+      score += rule.points;
+      warnings.push(rule.warning);
+    }
+  });
+
+  score = Math.min(score, 100);
+
+  let level = "Low Risk";
+  if (score > 80) level = "Critical Risk";
+  else if (score > 60) level = "High Risk";
+  else if (score > 40) level = "Moderate Risk";
+  else if (score > 20) level = "Caution";
+
+  document.getElementById("result").innerHTML = `
+    <div class="score">${score}%</div>
+    <h3>${level}</h3>
+    <p>Detected warning signs:</p>
+    <p>${warnings.length ? warnings.join("<br>") :
+      "No warning signs detected by this basic checker."}</p>
+    <br>
+    <p><b>Important:</b> This is a basic keyword demonstration,
+    not a real AI detector. A low score does not guarantee safety.
+    Verify suspicious requests independently.</p>
+  `;
+}
+</script>
+
+</body>
+</html>
