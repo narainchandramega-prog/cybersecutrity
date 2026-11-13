@@ -197,7 +197,8 @@ async function askCyberShieldAI(question){
   out.textContent=answer;
  }catch(error){
   assistantHistory.pop();
-  out.textContent='CyberShield AI is temporarily unavailable. Please try again later. You can still use the other CyberShield safety tools.';
+  const safeMessage=error && typeof error.message==='string' ? error.message : '';
+  out.textContent=(safeMessage && safeMessage.length<300 ? safeMessage : 'CyberShield AI is temporarily unavailable. Please try again later.')+' You can still use the other CyberShield safety tools.';
  }finally{
   button.disabled=false;
   button.textContent='Ask CyberShield AI';
