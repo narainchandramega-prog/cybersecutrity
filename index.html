@@ -20,296 +20,321 @@
 .smallprint{font-size:12px;color:var(--muted)}
 @media print{body{background:white;color:#111}.no-print,header,footer,.section:not(#certificate){display:none!important}#certificate{display:block!important}.tool,.card{background:white;color:#111;border:2px solid #222}#certificate .sub{color:#333}}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" defer></script>
 </head>
 <body>
 <header><div class="wrap top"><a class="brand" href="#home">🛡 CyberShield</a><nav class="nav" aria-label="Main navigation">
-<a href="#tools">Tools</a><a href="#academy">Academy</a><a href="#quiz">Quiz</a><a href="#alerts">Alerts</a><a href="#dashboard">Dashboard</a><a href="#mission">Missions</a><a href="#labs">Labs</a><a href="#resources">Guides</a></nav>
-<select id="language" class="lang" aria-label="Language"><option value="en">English</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="hi">हिन्दी</option><option value="ml">മലയാളം</option><option value="kn">ಕನ್ನಡ</option></select></div></header>
+<a href="#tools">Tools</a><a href="#academy">Learn</a><a href="#quiz">Quiz</a><a href="#mission">Mission</a><a href="#labs">Labs</a><a href="#assistant">Assistant</a><a href="#emergency">Help</a></nav></div></header>
 <main id="home"><section class="hero"><div class="wrap"><span class="eyebrow">YOUR EVERYDAY DIGITAL SAFETY COMPANION</span><h1 data-i18n="heroTitle">Your Digital World.<br><span>Your Protection.</span></h1><p data-i18n="heroText">Understand suspicious messages, check links carefully and build safer online habits — all in one place.</p><div class="actions"><a class="btn" href="#tools" data-i18n="start">Explore safety tools</a><a class="btn secondary" href="#academy" data-i18n="learn">Start learning</a></div><p class="tagline" style="margin-top:20px">Privacy-first • No message history saved • Clear verification limits</p></div></section>
-<section class="section wrap" id="tools"><div class="section-head"><div><h2 data-i18n="toolsTitle">Digital Safety Toolkit</h2><p class="sub">Practical checks to help you pause, inspect and verify.</p></div><input id="featureSearch" class="field searchbar" placeholder="Search tools and guides…" aria-label="Search tools"></div>
-<div class="grid" id="toolCards">
-<a class="card" href="#messageTool" data-search="scam message text multilingual"><div class="ico">📩</div><h3>Message scam checker</h3><p>Look for pressure tactics, suspicious requests and warning signs.</p></a>
-<a class="card" href="#urlTool" data-search="url website link safety"><div class="ico">🔗</div><h3>Website URL checker</h3><p>Inspect URL structure and common warning indicators.</p></a>
-<a class="card" href="#qrTool" data-search="qr code image decoder"><div class="ico">▦</div><h3>QR code decoder</h3><p>Decode a QR image and preview its destination without opening it.</p></a>
-<a class="card" href="#mediaTool" data-search="ai image video deepfake authenticity"><div class="ico">🎬</div><h3>Image & video awareness</h3><p>Use a verification checklist for manipulated media.</p></a>
-<a class="card" href="#emailTool" data-search="fake email phishing sender"><div class="ico">✉️</div><h3>Fake email detector</h3><p>Review email text, sender details and suspicious requests.</p></a>
-<a class="card" href="#ocrTool" data-search="screenshot image text extraction ocr scam"><div class="ico">🖼️</div><h3>Screenshot text analysis</h3><p>Extract text from an image and check it for warning signs.</p></a>
+<section class="section wrap" id="tools"><div class="section-head"><div><h2>Digital Safety Toolkit</h2><p class="sub">Simple, browser-based checks for common online warning signs.</p></div></div><div class="grid" id="toolCards">
+<a class="card" href="#messageTool"><div class="ico">📩</div><h3>Scam message detector</h3><p>Check messages for common scam indicators.</p></a>
+<a class="card" href="#emailTool"><div class="ico">✉️</div><h3>Spam email detector</h3><p>Review email content and sender format.</p></a>
+<a class="card" href="#labs"><div class="ico">🛍️</div><h3>Shopping URL detector</h3><p>Inspect common warning signs in a shop URL.</p></a>
+<a class="card" href="#passwordLab"><div class="ico">🔐</div><h3>Password strength lab</h3><p>Check a made-up sample locally.</p></a>
+<a class="card" href="#mission"><div class="ico">🚪</div><h3>Cyber escape challenge</h3><p>Answer a safety question to complete the challenge.</p></a>
+<a class="card" href="#assistant"><div class="ico">🤖</div><h3>CyberShield assistant</h3><p>Ask a cybersecurity learning question.</p></a>
 </div></section>
-<section class="section wrap" id="messageTool"><div class="section-head"><div><h2>📩 Multilingual scam message checker</h2><p class="sub">Rule-based warning indicators — not an AI verdict or proof of fraud.</p></div></div><div class="tool"><label for="messageInput"><b>Paste a suspicious message</b></label><textarea id="messageInput" class="field" maxlength="5000" placeholder="Paste message text here…"></textarea><button class="btn" id="analyseMessage">Analyse message</button><div id="messageResult" class="result hidden" aria-live="polite"></div></div></section>
-<section class="section wrap" id="urlTool"><h2>🔗 Website URL safety checker</h2><p class="sub">Checks visible URL characteristics only. It does not query a live threat-intelligence database.</p><div class="tool"><input id="urlInput" class="field" type="text" maxlength="2000" placeholder="https://example.com"><button class="btn" id="checkUrl">Inspect URL</button><div id="urlResult" class="result hidden" aria-live="polite"></div></div></section>
-<section class="section wrap" id="qrTool"><h2>▦ QR code image decoder</h2><p class="sub">The decoded destination is shown as text. CyberShield will never auto-open it.</p><div class="tool"><input id="qrFile" class="field" type="file" accept="image/*"><button class="btn" id="decodeQr">Decode QR image</button><div id="qrResult" class="result hidden" aria-live="polite"></div></div></section>
-<section class="section wrap" id="mediaTool"><h2>🎬 Image & video authenticity awareness</h2><p class="sub">No reliable authenticity verdict can be made from appearance alone. Use independent verification.</p><div class="tool"><div class="grid"><div><h3>Image / video review checklist</h3><div id="mediaChecks"></div><button class="btn secondary" id="mediaReset">Reset checklist</button></div><div><h3>What to verify</h3><ul class="list"><li>Find the earliest known source and publication date.</li><li>Check whether reputable independent outlets confirm the event.</li><li>Look for context mismatch, edits or recycled footage.</li><li>Contact the person through a known, separate channel.</li><li>Do not treat visual glitches or AI-detector scores as proof.</li></ul></div></div></div></section>
-<section class="section wrap" id="emailTool"><h2>✉️ Fake email detector</h2><p class="sub">Paste the email text and optionally its displayed sender address. Avoid including private information.</p><div class="tool"><input id="emailSender" class="field" placeholder="Displayed sender address (optional)"><textarea id="emailInput" class="field" maxlength="7000" placeholder="Paste email subject and body…"></textarea><button class="btn" id="analyseEmail">Analyse email</button><div id="emailResult" class="result hidden" aria-live="polite"></div></div></section>
-<section class="section wrap" id="ocrTool"><h2>🖼️ Screenshot text extraction & scam analysis</h2><p class="sub">Image text is processed in your browser using OCR. Avoid uploading private documents.</p><div class="tool"><input id="ocrFile" class="field" type="file" accept="image/*"><button class="btn" id="extractText">Extract and analyse text</button><p id="ocrStatus" class="note" aria-live="polite"></p><textarea id="ocrText" class="field" placeholder="Extracted text will appear here…" maxlength="5000"></textarea><div id="ocrResult" class="result hidden"></div></div></section>
+<section class="section wrap" id="messageTool"><h2>📩 Scam Message Detector</h2><p class="sub">Rule-based warning indicators. This is not an AI verdict or proof of fraud.</p><div class="tool"><label for="scamMessage"><b>Paste a suspicious message</b></label><textarea id="scamMessage" class="field" maxlength="5000" placeholder="Paste message text here…"></textarea><button class="btn" id="detectScamBtn">Analyse message</button><div id="scamResult" class="result" aria-live="polite"></div></div></section>
+<section class="section wrap" id="emailTool"><h2>✉️ Spam Email Detector</h2><p class="sub">Paste email text and optionally enter the displayed sender address. Do not include private information.</p><div class="tool"><input id="emailSender" class="field" type="text" placeholder="Displayed sender address (optional)"><textarea id="emailText" class="field" maxlength="7000" placeholder="Paste email subject and body…"></textarea><button class="btn" id="analyzeEmailBtn">Analyse email</button><div id="emailResult" class="result" aria-live="polite"></div></div></section>
 <section class="section wrap" id="academy"><h2>🎓 Cybersecurity Learning Academy</h2><p class="sub">Short lessons to build everyday digital safety habits.</p><div class="grid">
-<div class="card"><div class="ico">🔐</div><h3>OTP & password safety</h3><p>Never share OTPs, passwords or recovery codes. Use unique passwords and multi-factor authentication.</p><button class="btn small lesson" data-lesson="otp">Mark lesson complete · +10 XP</button></div>
-<div class="card"><div class="ico">🔗</div><h3>Link safety</h3><p>Check the actual domain, spelling and destination before entering details. HTTPS alone does not prove trust.</p><button class="btn small lesson" data-lesson="links">Mark lesson complete · +10 XP</button></div>
-<div class="card"><div class="ico">💳</div><h3>Payment safety</h3><p>Never act under pressure. Verify payment requests independently and review the recipient before confirming.</p><button class="btn small lesson" data-lesson="payments">Mark lesson complete · +10 XP</button></div>
-<div class="card"><div class="ico">🧑‍🤝‍🧑</div><h3>Social engineering</h3><p>Scammers may impersonate trusted people or organisations. Pause and confirm using a known contact method.</p><button class="btn small lesson" data-lesson="social">Mark lesson complete · +10 XP</button></div>
+<div class="card"><div class="ico">🔐</div><h3>OTP & password safety</h3><p>Never share OTPs, passwords or recovery codes. Use unique passwords and multi-factor authentication.</p></div>
+<div class="card"><div class="ico">🔗</div><h3>Link safety</h3><p>Check the actual domain, spelling and destination before entering details. HTTPS alone does not prove trust.</p></div>
+<div class="card"><div class="ico">💳</div><h3>Payment safety</h3><p>Never act under pressure. Verify payment requests independently and review the recipient before confirming.</p></div>
+<div class="card"><div class="ico">🧑‍🤝‍🧑</div><h3>Social engineering</h3><p>Scammers may impersonate trusted people or organisations. Pause and confirm using a known contact method.</p></div>
 </div></section>
-<section class="section wrap" id="quiz"><h2>🧠 Daily cyber safety quiz</h2><p class="sub">Answer a quick question to earn XP. One reward per question each day.</p><div class="tool"><div id="quizArea"></div><div id="quizFeedback" aria-live="polite"></div></div></section>
-<section class="section wrap" id="daily"><div class="two"><div class="tool"><h2>🕵️ Scam of the Day</h2><p class="sub">Awareness example — not a live incident report.</p><div id="scamOfDay"></div></div><div class="tool" id="alerts"><h2>🚨 Fraud awareness alert centre</h2><p class="sub">General safety notices. This page does not provide a live emergency feed.</p><ul class="list"><li><b>Impersonation:</b> Verify unexpected calls claiming to be from banks or officials.</li><li><b>Payment pressure:</b> Pause if someone demands immediate transfers or secrecy.</li><li><b>Account warnings:</b> Visit the official app or website independently instead of using message links.</li><li><b>Fake support:</b> Do not install remote-access apps at the request of an unknown caller.</li></ul></div></div></section>
-<section class="section wrap" id="dashboard"><h2>📊 My Protection Dashboard</h2><p class="sub">Your learning progress is stored only in this browser. No submitted messages are saved.</p><div class="grid"><div class="card"><p>Total XP</p><div class="stat" id="xpStat">0</div></div><div class="card"><p>Lessons completed</p><div class="stat" id="lessonStat">0/4</div></div><div class="card"><p>Quizzes completed</p><div class="stat" id="quizStat">0</div></div><div class="card"><p>Badges earned</p><div class="stat" id="badgeStat">0</div></div></div><div class="tool" style="margin-top:16px"><h3>Next milestone</h3><p id="nextMilestone" class="muted">Earn 50 XP to unlock the Safety Starter badge.</p><div class="bar"><span id="xpBar"></span></div><h3 style="margin-top:18px">Achievements</h3><div id="badges"></div><button class="btn secondary small" id="resetProgress" style="margin-top:15px">Reset my progress</button></div></section>
-<section class="section wrap" id="resources"><h2>📚 Safety guides & quick references</h2><div class="grid">
-<div class="card"><h3>📖 Digital safety dictionary</h3><input id="dictSearch" class="field" placeholder="Search a term…"><div id="dictionary"></div></div>
-<div class="card"><h3>👨‍👩‍👧 Family safety guide</h3><ul class="list"><li>Agree on a family verification phrase for unusual requests.</li><li>Keep devices and apps updated.</li><li>Talk openly about suspicious messages without blame.</li><li>Review privacy settings together.</li><li>Ask a trusted adult before responding to urgent money or account requests.</li></ul></div>
-<div class="card"><h3>✅ Before You Click checklist</h3><div id="clickChecks"></div><p id="checkCount" class="note">0 of 5 checked</p></div>
-</div></section>
+<section class="section wrap" id="quiz"><h2>🧠 Cyber Safety Quiz</h2><p class="sub">Choose the safest response.</p><div class="tool"><b>A caller claims to be from your bank and asks you to share an OTP. What should you do?</b>
+<button class="quiz-option" onclick="checkAnswer('Share the OTP','Never share it')">Share the OTP to avoid account problems</button>
+<button class="quiz-option" onclick="checkAnswer('Never share it','Never share it')">Never share it; contact your bank through its official app or number</button>
+<button class="quiz-option" onclick="checkAnswer('Send it to a friend','Never share it')">Send it to a friend for advice</button>
+<div id="quizResult" class="result" aria-live="polite"></div></div></section>
+<section class="section wrap" id="alerts"><div class="tool"><h2>🚨 Fraud Awareness Alerts</h2><p class="sub">General safety notices, not a live incident feed.</p><ul class="list"><li><b>Impersonation:</b> Verify unexpected calls claiming to be from banks or officials.</li><li><b>Payment pressure:</b> Pause if someone demands immediate transfers or secrecy.</li><li><b>Account warnings:</b> Visit the official app or website independently instead of using message links.</li><li><b>Fake support:</b> Do not install remote-access apps at the request of an unknown caller.</li></ul></div></section>
+<section class="section wrap" id="resources"><h2>📚 Family Safety Guide</h2><div class="grid"><div class="card"><h3>Verify unusual requests</h3><p>Agree on a family verification phrase for unusual requests. Contact people through a known channel.</p></div><div class="card"><h3>Keep accounts protected</h3><p>Keep devices and apps updated. Use unique passwords and multi-factor authentication.</p></div><div class="card"><h3>Talk openly</h3><p>Discuss suspicious messages without blame. Ask a trusted adult before responding to urgent money or account requests.</p></div></div></section>
 </main>
-<section class="section wrap" id="mission"><div class="section-head"><div><span class="feature-badge">CYBERSHIELD 3.0</span><h2>🎮 Cyber Missions</h2><p class="sub">Learn by making safe decisions in fictional, classroom-friendly scenarios.</p></div></div>
-<div class="grid">
- <div class="tool"><h3>🚪 Cyber Escape Room</h3><p class="note">Complete three safety checkpoints to unlock the exit.</p><div id="escapeArea"></div></div>
- <div class="tool"><h3>🕵️ Cyber Detective</h3><p class="note">Inspect a fictional case and identify the warning signs.</p><div id="detectiveArea"></div></div>
- <div class="tool"><h3>🏟️ Live Quiz Arena</h3><p class="note">A shared-screen classroom mode. This demo runs locally on this device; it does not sync players across devices.</p><div id="arenaArea"></div></div>
- <div class="tool"><h3>🏛️ Scam Museum</h3><p class="note">Explore fictional examples and the clues behind them.</p><div id="museumArea"></div></div>
+<section class="section wrap" id="mission"><div class="section-head"><div><span class="feature-badge">CYBERSHIELD 3.0</span><h2>🎮 Cyber Escape Challenge</h2><p class="sub">Answer the safety question to complete this challenge.</p></div></div><div class="tool"><p><b>A message says your account will be blocked unless you share a one-time code immediately. What should you do?</b></p><input id="escapeAnswer" class="field" placeholder="Enter your answer"><button class="btn" id="submitEscapeBtn">Submit answer</button><div id="escapeResult" class="feedback" aria-live="polite"></div></div></section>
+<section class="section wrap" id="labs"><h2>🧪 Protection Labs</h2><p class="sub">Use made-up examples only. Do not enter real passwords or private information.</p><div class="grid">
+<div class="tool" id="passwordLab"><h3>🔐 Password Strength Lab</h3><input id="password" class="field" type="password" autocomplete="off" maxlength="128" placeholder="Try a made-up password"><div id="passwordResult" class="feedback" aria-live="polite"></div><button class="btn small" id="checkPasswordBtn">Check password</button></div>
+<div class="tool"><h3>🛍️ Fake Shopping Website Detector</h3><input id="shopURL" class="field" placeholder="Paste a shop website URL"><button class="btn" id="inspectShopBtn">Inspect shop URL</button><div id="shopResult" class="feedback" aria-live="polite"></div></div>
 </div></section>
-<section class="section wrap" id="labs"><h2>🧪 Protection Labs</h2><p class="sub">Tools run in this browser. Avoid entering real passwords, private identifiers or confidential data.</p><div class="grid">
- <div class="tool"><h3>🔐 Password Strength Lab</h3><p class="note">Type a sample password or passphrase. It is checked locally and is never saved or transmitted. For maximum privacy, use a made-up example.</p><input id="pwInput" class="field" type="password" autocomplete="off" maxlength="128" placeholder="Try a made-up password"><label class="checkrow"><input id="pwShow" type="checkbox"><span>Show sample text</span></label><div class="meter"><span id="pwMeter"></span></div><div id="pwResult" aria-live="polite" class="smallprint">Enter a sample to see guidance.</div></div>
- <div class="tool"><h3>🛍️ Fake Shopping Detector</h3><p class="note">Checks visible URL signals only; it cannot verify a seller, payment page or live reputation.</p><input id="shopUrl" class="field" placeholder="Paste a shop website URL"><button class="btn" id="shopCheck">Inspect shop URL</button><div id="shopResult" class="feedback hidden" aria-live="polite"></div></div>
- <div class="tool"><h3>🧩 Privacy Footprint Checker</h3><p class="note">Self-assess common privacy settings. Your answers stay in this browser session and are not submitted.</p><div id="privacyQuestions"></div><button class="btn" id="privacyScore">Review my privacy habits</button><div id="privacyResult" class="feedback hidden" aria-live="polite"></div></div>
- <div class="tool"><h3>👣 Digital Footprint Simulator</h3><p class="note">Select information you might share publicly to see how separate details can combine. This is a fictional simulation, not a search about you.</p><div id="footprintOptions"></div><button class="btn" id="footprintRun">Simulate my digital footprint</button><div id="footprintResult" class="feedback hidden" aria-live="polite"></div></div>
-</div></section>
-<section class="section wrap" id="assistant"><div class="tool"><h2>🤖 CyberShield AI Assistant</h2><p class="sub">AI-powered cybersecurity learning assistant. Ask questions in natural language and get context-aware safety guidance. AI answers can be wrong; verify important information independently.</p><div class="grid"><button class="choice" data-help="message">I received a suspicious message</button><button class="choice" data-help="payment">Someone is asking me to pay</button><button class="choice" data-help="account">I think my account is compromised</button><button class="choice" data-help="shopping">I am unsure about an online shop</button><button class="choice" data-help="adult">I need help reporting a cybercrime in India</button></div><label for="assistantQuestion"><b>Ask a cyber-safety question</b></label><textarea id="assistantQuestion" class="field" rows="3" maxlength="1500" placeholder="Ask anything about suspicious messages, account safety, privacy or online scams…"></textarea><p class="smallprint">Do not enter passwords, OTPs, bank details, phone numbers or other private information. Your question is sent to the AI provider to generate a reply. CyberShield does not save chat history; it stays in this browser tab only.</p><button class="btn" id="askAssistant">Ask CyberShield AI</button><div id="assistantAnswer" class="feedback" aria-live="polite">Hello! I’m CyberShield AI. Ask me a cybersecurity question to get started.</div></div></section>
-<section class="section wrap" id="analytics"><h2>📈 Threat Analytics Dashboard</h2><p class="sub">Counts are local to this browser only. They are not global threat statistics and are not uploaded.</p><div class="tool"><div class="stat-grid"><div class="card"><p>Text checks</p><div class="stat" id="anaText">0</div></div><div class="card"><p>URL checks</p><div class="stat" id="anaUrl">0</div></div><div class="card"><p>Mission completions</p><div class="stat" id="anaMission">0</div></div><div class="card"><p>Quiz answers</p><div class="stat" id="anaQuiz">0</div></div></div><div class="bar"><span id="anaProgress"></span></div><p id="anaSummary" class="smallprint">Use the tools and missions to build your local activity summary.</p><button class="btn secondary small" id="clearAnalytics">Clear local analytics</button></div></section>
-<section class="section wrap" id="certificate"><div class="tool"><h2>🎓 Cyber Safety Certificate</h2><p class="sub">Complete the learning checklist to create a printable project completion certificate. This is not an accredited qualification.</p><label for="certName"><b>Name to display</b></label><input id="certName" class="field" maxlength="60" placeholder="Enter your name"><div id="certProgress" class="smallprint"></div><button class="btn no-print" id="makeCertificate">Generate printable certificate</button><div id="certificatePreview" class="feedback hidden"><div style="text-align:center;padding:28px;border:4px double #45e0cf;border-radius:12px"><div style="font-size:42px">🛡️</div><h2 style="color:var(--teal)">CYBERSHIELD</h2><h1>Certificate of Completion</h1><p>This recognises that</p><h2 id="certDisplayName"></h2><p>has completed the CyberShield Digital Safety learning activities.</p><p id="certDate"></p><p class="smallprint">Educational project certificate · Not an official qualification</p></div><button class="btn no-print" onclick="window.print()">Print / Save as PDF</button></div></div></section>
+<section class="section wrap" id="assistant"><div class="tool"><h2>🤖 CyberShield AI Assistant</h2><p class="sub">Ask a cybersecurity learning question. AI answers can be wrong; verify important information independently.</p><label for="assistantInput"><b>Your question</b></label><textarea id="assistantInput" class="field" rows="3" maxlength="1500" placeholder="Ask about suspicious messages, account safety, privacy or online scams…"></textarea><p class="smallprint">Do not enter passwords, OTPs, bank details or other private information.</p><button class="btn" id="sendAssistantBtn">Ask CyberShield AI</button><div id="assistantResult" class="feedback" aria-live="polite">Ask a cybersecurity question to get started.</div></div></section>
 <section class="section wrap" id="emergency"><div class="tool"><h2>🆘 Emergency Help Centre — India</h2><p class="sub">If you suspect financial cyber fraud, act quickly. Use official channels and tell a trusted adult or responsible person.</p><div class="grid"><div class="card"><h3>Call 1930</h3><p>India's cyber financial fraud helpline. Contact your bank/payment provider immediately too.</p></div><div class="card"><h3>Report online</h3><p>Use the official National Cyber Crime Reporting Portal.</p><p><a href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer">Open cybercrime.gov.in ↗</a></p></div><div class="card"><h3>Protect accounts</h3><p>From a trusted device, contact the provider, change affected passwords, sign out other sessions and enable multi-factor authentication.</p></div><div class="card"><h3>Keep records</h3><p>Preserve transaction references, dates, messages and report acknowledgements. Do not share OTPs or pay anyone promising guaranteed recovery.</p></div></div><p class="smallprint">For immediate physical danger, contact local emergency services. CyberShield is an educational guide and cannot file a report or recover funds for you.</p></div></section>
 <footer class="footer"><div class="wrap">🛡 CyberShield © 2026 · Stay Alert. Stay Protected.<p class="tagline">Educational assistance only. No checker can guarantee that a message, URL, QR code or media file is safe.</p></div></footer>
 <script>
-const $=id=>document.getElementById(id);
-const stateKey='cybershield_progress_v2';
-function loadState(){try{return JSON.parse(localStorage.getItem(stateKey))||{xp:0,lessons:[],quizzes:[],badges:[]}}catch(e){return{xp:0,lessons:[],quizzes:[],badges:[]}}}
-let progress=loadState();
-function saveState(){try{localStorage.setItem(stateKey,JSON.stringify(progress))}catch(e){};renderDashboard()}
-function award(points,reason){progress.xp=(progress.xp||0)+points;updateBadges();saveState();return reason}
-function updateBadges(){const defs=[['starter','Safety Starter',50],['learner','Cyber Learner',100],['guardian','Digital Guardian',200]];progress.badges=defs.filter(x=>progress.xp>=x[2]).map(x=>x[0])}
-function renderDashboard(){ $('xpStat').textContent=progress.xp||0;$('lessonStat').textContent=(progress.lessons||[]).length+'/4';$('quizStat').textContent=(progress.quizzes||[]).length;$('badgeStat').textContent=(progress.badges||[]).length;const next=[50,100,200].find(n=>(progress.xp||0)<n);$('nextMilestone').textContent=next?'Earn '+next+' XP to unlock your next badge.':'All current XP badges unlocked — excellent progress!';$('xpBar').style.width=Math.min(100,(progress.xp%50)/50*100)+'%';$('badges').innerHTML=(progress.badges||[]).length?progress.badges.map(b=>'<span class="pill">🏅 '+({starter:'Safety Starter',learner:'Cyber Learner',guardian:'Digital Guardian'}[b])+'</span>').join(''):'<span class="muted">Complete lessons and quizzes to earn badges.</span>'}
-const rules=[
-{w:['otp','one time password','password','pin','பின் எண்','ఓటిపి','ओटीपी','ഒടിപി','ಒಟಿಪಿ'],p:28,t:'Requests a password, OTP or PIN'},
-{w:['urgent','immediately','account blocked','act now','அவசரம்','తక్షణం','तुरंत','ഉടൻ','ತಕ್ಷಣ'],p:18,t:'Uses urgency or account-threat language'},
-{w:['lottery','winner','prize','reward','பரிசு','బహుమతి','इनाम','സമ്മാനം','ಬಹುಮಾನ'],p:18,t:'Unexpected prize or reward claim'},
-{w:['send money','transfer money','payment','fee','pay now','பணம் அனுப்பு','డబ్బు పంపు','पैसे भेजें','പണം അയക്കുക','ಹಣ ಕಳುಹಿಸಿ'],p:22,t:'Requests money or payment'},
-{w:['click here','verify account','claim now','login','கிளிக்','క్లిక్','क्लिक','ക്ലിക്ക്','ಕ್ಲಿಕ್'],p:14,t:'Pushes an unexpected click, login or verification'},
-{w:['gift card','crypto','upi collect','remote access','anydesk','screen share'],p:22,t:'Mentions a payment or access method often abused in scams'}
-];
-function analyseText(text){let s=0,flags=[];const low=text.toLocaleLowerCase();for(const r of rules){if(r.w.some(w=>low.includes(w))){s+=r.p;flags.push(r.t)}}s=Math.min(100,s);return{score:s,flags,level:s>=70?'High warning level':s>=40?'Caution':s>=20?'Some warning signs':'Few indicators found'}}
-function showAnalysis(target,text,kind){if(!text.trim()){target.classList.remove('hidden');target.textContent='Please enter some text first.';return}const r=analyseText(text);target.classList.remove('hidden');target.innerHTML='<div class="risk">'+r.score+'% indicator score</div><b>'+r.level+'</b><p>'+ (r.flags.length?'Warning indicators:':'No configured warning indicators matched.')+'</p>'+(r.flags.length?'<ul class="list">'+r.flags.map(x=>'<li>'+escapeHtml(x)+'</li>').join('')+'</ul>':'')+'<p class="note">This is a transparent, rule-based text check — not AI, not a probability of fraud and not a guarantee of safety. Language coverage is limited. Verify through an independent official channel.</p>'; }
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-$('analyseMessage').addEventListener('click',()=>showAnalysis($('messageResult'),$('messageInput').value,'message'));
-$('checkUrl').addEventListener('click',()=>{const raw=$('urlInput').value.trim(),out=$('urlResult');out.classList.remove('hidden');if(!raw){out.textContent='Enter a URL first.';return}let u;try{u=new URL(raw.includes('://')?raw:'https://'+raw)}catch(e){out.textContent='This does not look like a valid web address. Check the spelling.';return}let flags=[];if(u.protocol!=='https:')flags.push('Not using HTTPS');if(u.username||u.password)flags.push('Contains embedded login details');if(u.hostname.startsWith('xn--')||u.hostname.includes('.xn--'))flags.push('Contains an internationalised/punycode domain');if(/^\d{1,3}(\.\d{1,3}){3}$/.test(u.hostname))flags.push('Uses a raw IP address instead of a familiar domain');if(u.hostname.split('.').length>4)flags.push('Has an unusually long subdomain chain');if(u.hostname.length>55)flags.push('Has a long domain name');if(u.href.length>180)flags.push('Has a very long URL');const short=['bit.ly','tinyurl.com','t.co','is.gd','rb.gy'].includes(u.hostname.toLowerCase());if(short)flags.push('Uses a link-shortening service; final destination is not shown');out.innerHTML='<b>Parsed destination:</b><p>'+escapeHtml(u.origin+u.pathname)+'</p><b>Host:</b> '+escapeHtml(u.hostname)+'<p>'+(flags.length?'<span class="pill yellow">Review carefully</span><ul class="list">'+flags.map(f=>'<li>'+escapeHtml(f)+'</li>').join('')+'</ul>':'<span class="pill">No configured URL warning matched</span>')+'</p><p class="note">No live reputation lookup was performed. HTTPS only encrypts the connection; it does not prove a site is legitimate. Do not enter credentials or payment details unless you independently trust the domain.</p>'});
-$('decodeQr').addEventListener('click',async()=>{const file=$('qrFile').files[0],out=$('qrResult');out.classList.remove('hidden');if(!file){out.textContent='Choose a QR image first.';return}if(!file.type.startsWith('image/')){out.textContent='Please choose an image file.';return}if(!window.jsQR){out.textContent='QR decoder library did not load. Check your connection and try again.';return}try{const img=new Image(),url=URL.createObjectURL(file);img.onload=()=>{try{const c=document.createElement('canvas'),ctx=c.getContext('2d');c.width=img.naturalWidth;c.height=img.naturalHeight;if(c.width*c.height>16000000){out.textContent='Image is too large to process safely.';URL.revokeObjectURL(url);return}ctx.drawImage(img,0,0);const d=ctx.getImageData(0,0,c.width,c.height),qr=jsQR(d.data,d.width,d.height);if(!qr){out.textContent='No QR code could be decoded from this image.'}else{let dest=qr.data,parsed;try{parsed=new URL(dest)}catch(e){}out.innerHTML='<b>Decoded content (not opened):</b><p>'+escapeHtml(dest)+'</p>'+(parsed?'<p>Destination host: <b>'+escapeHtml(parsed.hostname)+'</b></p>':'')+'<p class="note">Do not open the destination unless you independently verify it. A QR code can contain a URL, payment request or other text. This tool does not check live reputation.</p>'}URL.revokeObjectURL(url)}catch(e){out.textContent='Could not read this image. Try another clear QR image.';URL.revokeObjectURL(url)}};img.onerror=()=>{out.textContent='Could not load the selected image.';URL.revokeObjectURL(url)};img.src=url}catch(e){out.textContent='QR decoding failed. Please try another image.'}});
-function analyzeEmail(email, sender = "") {
+/* ==========================================
+   CYBERSHIELD 3.0 - IMPROVED JAVASCRIPT
+   Rule-based Cybersecurity Detection Engine
+========================================== */
 
-    const text = email.toLowerCase();
+/* 1. NAVIGATION */
+function openFeature(featureId) {
+    document.querySelectorAll(".feature").forEach(feature => {
+        feature.style.display = "none";
+    });
+    const selected = document.getElementById(featureId);
+    if (selected) {
+        selected.style.display = "block";
+        selected.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+        console.error("Feature not found:", featureId);
+    }
+}
 
+/* 2. PASSWORD STRENGTH LAB */
+function checkPassword() {
+    const password = document.getElementById("password").value;
+    const result = document.getElementById("passwordResult");
+    if (!password) {
+        result.textContent = "Please enter a password.";
+        return;
+    }
+    let score = 0;
+    let feedback = [];
+    if (password.length >= 12) score += 2;
+    else if (password.length >= 8) score++;
+    if (/[A-Z]/.test(password)) score++;
+    else feedback.push("Add uppercase letters.");
+    if (/[a-z]/.test(password)) score++;
+    else feedback.push("Add lowercase letters.");
+    if (/[0-9]/.test(password)) score++;
+    else feedback.push("Include numbers.");
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+    else feedback.push("Include special characters.");
+    if (/(.)\\1{2,}/.test(password)) {
+        score--;
+        feedback.push("Avoid repeated characters.");
+    }
+    if (/password|123456|qwerty|admin/i.test(password)) {
+        score -= 2;
+        feedback.push("Avoid common password patterns.");
+    }
+    let strength;
+    if (score >= 6) strength = "Strong";
+    else if (score >= 4) strength = "Moderate";
+    else strength = "Weak";
+    result.textContent = "Password Strength: " + strength + ". " +
+        (feedback.length ? feedback.join(" ") : "Good password characteristics detected.") +
+        " Password is checked locally and is not stored or transmitted.";
+}
+
+/* 3. CYBER QUIZ */
+function checkAnswer(selected, correct) {
+    const result = document.getElementById("quizResult");
+    if (!result) return;
+    if (String(selected).trim().toLowerCase() === String(correct).trim().toLowerCase()) {
+        result.textContent = "Correct answer! Well done.";
+        result.style.color = "#35e0c1";
+    } else {
+        result.textContent = "Incorrect answer. Try again!";
+        result.style.color = "#ff6464";
+    }
+}
+
+/* 4. ADVANCED SCAM MESSAGE DETECTOR */
+function detectScam() {
+    const message = document.getElementById("scamMessage").value;
+    const result = document.getElementById("scamResult");
+    if (!message.trim()) {
+        result.textContent = "Please enter a message to analyse.";
+        return;
+    }
+    const text = message.toLowerCase();
     let score = 0;
     let warnings = [];
-
     const patterns = [
-        {
-            regex: /urgent|immediately|act now|limited time/gi,
-            points: 15,
-            message: "Creates urgency or pressure"
-        },
-        {
-            regex: /password|verify your account|login now/gi,
-            points: 20,
-            message: "Requests account verification"
-        },
-        {
-            regex: /bank details|credit card|upi pin|otp/gi,
-            points: 25,
-            message: "Requests sensitive financial information"
-        },
-        {
-            regex: /won a prize|lottery winner|claim reward/gi,
-            points: 20,
-            message: "Contains suspicious reward claims"
-        },
-        {
-            regex: /send money|processing fee|pay immediately/gi,
-            points: 25,
-            message: "Contains suspicious payment requests"
-        },
-        {
-            regex: /click here|bit\\.ly|tinyurl/gi,
-            points: 15,
-            message: "Contains potentially suspicious links"
-        }
+        { regex: /\\burgent\\b|immediately|act now|limited time/i, points: 15, warning: "Urgent or pressure-based language detected." },
+        { regex: /free prize|won a lottery|claim your reward|lucky winner/i, points: 25, warning: "Suspicious prize or lottery claims." },
+        { regex: /verify your account|account suspended|account blocked/i, points: 25, warning: "Possible account phishing attempt." },
+        { regex: /send password|share your otp|reveal your pin/i, points: 35, warning: "Requests sensitive security information." },
+        { regex: /send money|processing fee|pay immediately/i, points: 25, warning: "Suspicious payment request." },
+        { regex: /bank details|upi pin|credit card details/i, points: 30, warning: "Sensitive financial information requested." },
+        { regex: /click here|bit\\.ly|tinyurl\\.com/i, points: 15, warning: "Potentially suspicious link detected." }
     ];
-
     patterns.forEach(item => {
         if (item.regex.test(text)) {
             score += item.points;
+            warnings.push(item.warning);
+        }
+    });
+    score = Math.min(score, 100);
+    let status;
+    if (score >= 60) status = "HIGH RISK";
+    else if (score >= 30) status = "SUSPICIOUS";
+    else if (warnings.length > 0) status = "LOW INDICATOR RISK";
+    else status = "NO OBVIOUS WARNING SIGNS";
+    result.textContent = status + " · Risk indicator score: " + score + "/100. " +
+        (warnings.length ? warnings.join(" ") : "No configured warning patterns matched.") +
+        " This is a rule-based assessment, not a guarantee that the message is genuine or fraudulent.";
+}
+
+/* 5. SPAM EMAIL DETECTOR */
+function analyzeEmail() {
+    const email = document.getElementById("emailText").value;
+    const senderElement = document.getElementById("emailSender");
+    const sender = senderElement ? senderElement.value.trim() : "";
+    const result = document.getElementById("emailResult");
+    if (!email.trim()) {
+        result.textContent = "Please enter email content.";
+        return;
+    }
+    let score = 0;
+    let warnings = [];
+    const patterns = [
+        { regex: /urgent|immediately|act now|limited time/gi, points: 15, message: "Urgency-based language." },
+        { regex: /verify your account|password expired|login immediately/gi, points: 25, message: "Possible credential phishing." },
+        { regex: /share your otp|upi pin|bank password|card details/gi, points: 35, message: "Requests sensitive financial information." },
+        { regex: /won a prize|lottery winner|claim your reward/gi, points: 25, message: "Suspicious reward or lottery claim." },
+        { regex: /send money|processing fee|payment required/gi, points: 25, message: "Suspicious payment request." },
+        { regex: /click here|bit\\.ly|tinyurl\\.com/gi, points: 15, message: "Potentially suspicious link." }
+    ];
+    patterns.forEach(item => {
+        if (item.regex.test(email)) {
+            score += item.points;
             warnings.push(item.message);
         }
-
         item.regex.lastIndex = 0;
     });
-
+    const urls = email.match(/https?:\\/\\/[^\\s<>"']+/gi) || [];
+    urls.forEach(link => {
+        try {
+            const parsed = new URL(link);
+            if (parsed.protocol !== "https:") {
+                score += 10;
+                warnings.push("Email contains a non-HTTPS link.");
+            }
+            if (parsed.hostname.includes("xn--")) {
+                score += 20;
+                warnings.push("Email contains a potentially deceptive encoded domain.");
+            }
+        } catch {
+            warnings.push("An invalid URL was found.");
+        }
+    });
     if (sender && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(sender)) {
-        warnings.push("Sender address has an invalid format");
-        score += 10;
+        score += 15;
+        warnings.push("Sender email address has an invalid format.");
     }
-
     score = Math.min(score, 100);
+    let status;
+    if (score >= 60) status = "HIGH RISK";
+    else if (score >= 30) status = "SUSPICIOUS";
+    else if (warnings.length > 0) status = "LOW INDICATOR RISK";
+    else status = "INSUFFICIENT WARNING INDICATORS";
+    result.textContent = status + " · " + score + "% indicator score. " +
+        (warnings.length ? warnings.join(" ") : "No configured warning indicators matched.") +
+        " This detector uses predefined rules. A low score does not establish that an email is safe.";
+}
 
-    let result;
-
-    if (score >= 60) {
-        result = "High Risk";
-    } else if (score >= 30) {
-        result = "Suspicious";
-    } else if (warnings.length > 0) {
-        result = "Low Indicator Risk";
-    } else {
-        result = "Insufficient Information";
+/* 6. FAKE SHOPPING WEBSITE DETECTOR */
+function inspectShopURL() {
+    const input = document.getElementById("shopURL").value.trim();
+    const result = document.getElementById("shopResult");
+    if (!input) {
+        result.textContent = "Please enter a website URL.";
+        return;
     }
-
-    return {
-        score,
-        result,
-        warnings
-    };
+    let url;
+    try {
+        url = new URL(/^https?:\\/\\//i.test(input) ? input : "https://" + input);
+        if (!["http:", "https:"].includes(url.protocol)) throw new Error("Unsupported protocol");
+    } catch {
+        result.textContent = "Invalid website URL. Please check your input.";
+        return;
+    }
+    let score = 0;
+    let warnings = [];
+    const domain = url.hostname.toLowerCase();
+    if (url.protocol !== "https:") {
+        score += 20;
+        warnings.push("Website does not use HTTPS.");
+    }
+    if (/^(\\d{1,3}\\.){3}\\d{1,3}$/.test(domain)) {
+        score += 30;
+        warnings.push("Website uses an IP address instead of a domain name.");
+    }
+    if (domain.includes("xn--")) {
+        score += 25;
+        warnings.push("Potentially deceptive encoded domain detected.");
+    }
+    if (url.href.length > 120) {
+        score += 10;
+        warnings.push("Unusually long URL detected.");
+    }
+    if (domain.split(".").length > 4) {
+        score += 15;
+        warnings.push("Unusual number of subdomains.");
+    }
+    if (url.username || url.password) {
+        score += 30;
+        warnings.push("URL contains embedded login credentials.");
+    }
+    const popularBrands = ["amazon", "flipkart", "myntra", "meesho", "ajio", "nykaa"];
+    popularBrands.forEach(brand => {
+        const suspiciousBrand = domain.includes(brand) &&
+            !domain.endsWith("." + brand + ".com") && domain !== brand + ".com";
+        if (suspiciousBrand) {
+            score += 25;
+            warnings.push("Possible brand impersonation involving " + brand + ".");
+        }
+    });
+    score = Math.min(score, 100);
+    let status;
+    if (score >= 50) status = "HIGH RISK INDICATORS";
+    else if (score >= 25) status = "SUSPICIOUS";
+    else if (warnings.length > 0) status = "SOME WARNING INDICATORS";
+    else status = "NO OBVIOUS WARNING INDICATORS";
+    result.textContent = status + " · Domain: " + domain + " · Indicator score: " + score + "/100. " +
+        (warnings.length ? warnings.join(" ") : "No configured URL warning indicators matched.") +
+        " This tool checks URL patterns only and cannot confirm whether a shopping website is genuine.";
 }
 
-// Connect the detector to the existing website interface
-$('analyseEmail').addEventListener('click', () => {
-    const sender = $('emailSender').value.trim();
-    const email = $('emailInput').value;
-    const analysis = analyzeEmail(email, sender);
-    const output = $('emailResult');
-
-    output.classList.remove('hidden');
-
-    output.innerHTML =
-        '<div class="risk">' +
-        analysis.score + '/100 risk score</div>' +
-        '<b>' + escapeHtml(analysis.result) + '</b>' +
-        (analysis.warnings.length
-            ? '<p>Warning indicators:</p><ul class="list">' +
-              analysis.warnings.map(warning =>
-                '<li>' + escapeHtml(warning) + '</li>'
-              ).join('') +
-              '</ul>'
-            : '<p>No configured warning indicators matched.</p>'
-        ) +
-        '<p class="note">This is a rule-based indicator check, not proof that an email is safe or fraudulent. Verify unexpected requests through an independent official channel.</p>';
-});
-
-$('extractText').addEventListener('click',async()=>{const f=$('ocrFile').files[0],status=$('ocrStatus');if(!f){status.textContent='Choose a screenshot image first.';return}if(!f.type.startsWith('image/')){status.textContent='Please choose an image file.';return}if(!window.Tesseract){status.textContent='OCR library did not load. Check your connection and try again.';return}if(f.size>8*1024*1024){status.textContent='Please choose an image smaller than 8 MB.';return}try{status.textContent='Reading text in your browser…';const result=await Tesseract.recognize(f,'eng');$('ocrText').value=result.data.text||'';status.textContent='Text extraction finished. OCR can make mistakes; review the text below.';showAnalysis($('ocrResult'),$('ocrText').value,'ocr')}catch(e){status.textContent='Text extraction failed. Try a clearer image.'}});
-const mediaLabels=['Can I identify the original source of this media?','Does the date and location match independent reports?','Have trusted sources confirmed the same event?','Could this be old footage shared with a new caption?','Have I verified the person through another channel?'];$('mediaChecks').innerHTML=mediaLabels.map((x,i)=>'<label class="checkrow"><input type="checkbox"><span>'+x+'</span></label>').join('');$('mediaReset').onclick=()=>$('mediaChecks').querySelectorAll('input').forEach(x=>x.checked=false);
-document.querySelectorAll('.lesson').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.lesson;if(progress.lessons.includes(id)){b.textContent='Completed';return}progress.lessons.push(id);award(10,'lesson');b.textContent='Completed ✓';b.disabled=true}));
-const quizBank=[{q:'A caller says your bank account will close unless you share an OTP. What should you do?',a:['Share it quickly','End the call and contact your bank through its official app or number','Send a screenshot'],c:1,e:'Never share an OTP. Contact the bank independently.'},{q:'A message says you won a prize but must pay a fee first. What is safest?',a:['Pay immediately','Forward it to friends','Do not pay; verify the offer independently'],c:2,e:'Unexpected prizes with advance fees are a common warning sign.'},{q:'A website uses HTTPS. Does that guarantee it is genuine?',a:['Yes, always','No; check the domain and verify independently','Only on mobile'],c:1,e:'HTTPS encrypts a connection but does not prove the website is trustworthy.'},{q:'You receive a QR code from an unknown source. What should you do?',a:['Scan and open it straight away','Preview the decoded destination and verify it first','Enter your bank details'],c:1,e:'QR codes can hide unexpected destinations. Never open unknown links automatically.'}];
-const today=new Date().toISOString().slice(0,10),qIndex=Math.floor(Date.now()/86400000)%quizBank.length;function renderQuiz(){const q=quizBank[qIndex],done=progress.quizzes.includes(today);$('quizArea').innerHTML='<b>'+q.q+'</b>'+q.a.map((a,i)=>'<button class="quiz-option" data-answer="'+i+'" '+(done?'disabled':'')+'>'+escapeHtml(a)+'</button>').join('')+(done?'<p class="note">You have completed today’s question.</p>':'');$('quizArea').querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=Number(b.dataset.answer)===q.c;$('quizFeedback').innerHTML='<p class="'+(ok?'':'muted')+'">'+(ok?'Correct! +10 XP.':'Not quite. Learn from this:')+' '+q.e+'</p>';if(!progress.quizzes.includes(today)){progress.quizzes.push(today);if(ok)award(10,'quiz');else saveState()}renderQuiz()})}renderQuiz();
-const daily=[['Fake delivery fee','A text claims a parcel is held and asks for a small fee through a link.','Open the courier’s official app or website yourself; do not use the message link.'],['Impersonation call','A caller claims to be support staff and asks you to install an app or share a code.','End the call and contact the organisation using a trusted number.'],['Prize notification','A social post says you have won a reward but must pay a processing fee.','Treat unexpected prizes and advance-fee requests with caution.']];const item=daily[Math.floor(Date.now()/86400000)%daily.length];$('scamOfDay').innerHTML='<h3 style="color:var(--teal)">'+item[0]+'</h3><p>'+item[1]+'</p><p><b>Safer response:</b> '+item[2]+'</p>';
-const terms=[['OTP','One-time password used to confirm an action. Never share it with another person.'],['Phishing','A deceptive message or website designed to trick someone into revealing information.'],['MFA','Multi-factor authentication: using more than one proof of identity.'],['Spoofing','Making a message, caller ID or website appear to come from another source.'],['Malware','Software designed to harm devices, disrupt systems or access data without permission.'],['HTTPS','Encrypted connection between a browser and a website; not proof that the site is honest.'],['Deepfake','Synthetic or altered media that imitates a real person or event.']];function renderDict(filter=''){$('dictionary').innerHTML=terms.filter(t=>(t[0]+' '+t[1]).toLowerCase().includes(filter.toLowerCase())).map(t=>'<p><b>'+t[0]+'</b><br><span class="muted">'+t[1]+'</span></p>').join('')||'<p class="muted">No matching term.</p>'}renderDict();$('dictSearch').oninput=e=>renderDict(e.target.value);
-const clickLabels=['I checked the exact website domain.','I was expecting this message or request.','I verified the sender using another channel.','I understand what information or payment is being requested.','I am not being pressured to act immediately.'];$('clickChecks').innerHTML=clickLabels.map(x=>'<label class="checkrow"><input type="checkbox"><span>'+x+'</span></label>').join('');function updateCheck(){$('checkCount').textContent=$('clickChecks').querySelectorAll('input:checked').length+' of 5 checked'}$('clickChecks').onchange=updateCheck;
-$('featureSearch').oninput=e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('#toolCards .card').forEach(c=>c.classList.toggle('hidden',!((c.dataset.search+' '+c.innerText).toLowerCase().includes(q))))};
-$('resetProgress').onclick=()=>{if(confirm('Reset XP, lessons, quiz history and badges on this browser?')){progress={xp:0,lessons:[],quizzes:[],badges:[]};saveState();document.querySelectorAll('.lesson').forEach(b=>{b.disabled=false;b.textContent='Mark lesson complete · +10 XP'});renderQuiz()}};
-const translations={ta:{start:'பாதுகாப்பு கருவிகளைப் பார்க்க',learn:'கற்றலைத் தொடங்கு',toolsTitle:'டிஜிட்டல் பாதுகாப்பு கருவிகள்',heroText:'சந்தேகமான செய்திகளைப் புரிந்து கொண்டு, இணைப்புகளைச் சரிபார்த்து, பாதுகாப்பான இணையப் பழக்கங்களை வளர்த்துக் கொள்ளுங்கள்.'},te:{start:'భద్రతా సాధనాలను చూడండి',learn:'నేర్చుకోవడం ప్రారంభించండి',toolsTitle:'డిజిటల్ భద్రతా సాధనాలు',heroText:'అనుమానాస్పద సందేశాలను అర్థం చేసుకోండి, లింక్‌లను జాగ్రత్తగా తనిఖీ చేయండి, సురక్షిత ఆన్‌లైన్ అలవాట్లు పెంపొందించుకోండి.'},hi:{start:'सुरक्षा टूल देखें',learn:'सीखना शुरू करें',toolsTitle:'डिजिटल सुरक्षा टूल',heroText:'संदिग्ध संदेशों को समझें, लिंक सावधानी से जाँचें और सुरक्षित ऑनलाइन आदतें बनाएँ।'},ml:{start:'സുരക്ഷാ ഉപകരണങ്ങൾ കാണുക',learn:'പഠനം ആരംഭിക്കുക',toolsTitle:'ഡിജിറ്റൽ സുരക്ഷാ ഉപകരണങ്ങൾ',heroText:'സംശയകരമായ സന്ദേശങ്ങൾ മനസ്സിലാക്കുക, ലിങ്കുകൾ ശ്രദ്ധയോടെ പരിശോധിക്കുക, സുരക്ഷിതമായ ഓൺലൈൻ ശീലങ്ങൾ വളർത്തുക.'},kn:{start:'ಸುರಕ್ಷತಾ ಸಾಧನಗಳನ್ನು ನೋಡಿ',learn:'ಕಲಿಕೆ ಪ್ರಾರಂಭಿಸಿ',toolsTitle:'ಡಿಜಿಟಲ್ ಸುರಕ್ಷತಾ ಸಾಧನಗಳು',heroText:'ಅನುಮಾನಾಸ್ಪದ ಸಂದೇಶಗಳನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ, ಲಿಂಕ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಸುರಕ್ಷಿತ ಆನ್‌ಲೈನ್ ಅಭ್ಯಾಸಗಳನ್ನು ಬೆಳೆಸಿಕೊಳ್ಳಿ.'}};
-$('language').onchange=e=>{const lang=e.target.value;document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(el=>{const key=el.dataset.i18n;if(lang==='en'){const defaults={heroTitle:'Your Digital World.<br><span>Your Protection.</span>',heroText:'Understand suspicious messages, check links carefully and build safer online habits — all in one place.',start:'Explore safety tools',learn:'Start learning',toolsTitle:'Digital Safety Toolkit'};el.innerHTML=defaults[key]}else if(translations[lang]&&translations[lang][key])el.textContent=translations[lang][key]})};
-renderDashboard();
-
-/* CyberShield 3.0: client-side learning features */
-const metricKey='cybershield_metrics_v3';
-let metrics={text:0,url:0,mission:0,quiz:0};
-try{metrics=Object.assign(metrics,JSON.parse(localStorage.getItem(metricKey))||{})}catch(e){}
-function saveMetrics(){try{localStorage.setItem(metricKey,JSON.stringify(metrics))}catch(e){};renderMetrics()}
-function renderMetrics(){$('anaText').textContent=metrics.text||0;$('anaUrl').textContent=metrics.url||0;$('anaMission').textContent=metrics.mission||0;$('anaQuiz').textContent=metrics.quiz||0;const total=(metrics.text||0)+(metrics.url||0)+(metrics.mission||0)+(metrics.quiz||0);$('anaProgress').style.width=Math.min(100,total*5)+'%';$('anaSummary').textContent='This browser has recorded '+total+' local learning/tool interactions. No submitted content is included.'}
-renderMetrics();
-const oldShowAnalysis=showAnalysis;
-showAnalysis=function(target,text,kind){oldShowAnalysis(target,text,kind);if(text.trim()){metrics.text++;saveMetrics()}};
-const oldCheckUrl=$('checkUrl').onclick;
-$('checkUrl').addEventListener('click',()=>{if($('urlInput').value.trim()){metrics.url++;saveMetrics()}});
-$('clearAnalytics').onclick=()=>{metrics={text:0,url:0,mission:0,quiz:0};saveMetrics()};
-const missions=[
-{q:'A message says your school account will close in 10 minutes unless you share a one-time code. What is the safest move?',a:['Send the code to avoid losing access','Pause and contact the school through a known official channel','Forward the code to a friend'],c:1,why:'One-time codes should never be shared. Verify unexpected account warnings independently.'},
-{q:'A QR poster promises a free prize but asks you to sign in with your email password. What should you do?',a:['Enter the password','Use a different password you often use','Do not sign in; verify the offer with the organisation'],c:2,why:'Unexpected prize claims and credential requests are warning signs. Do not enter account credentials.'},
-{q:'A caller says they are from technical support and asks you to install remote-access software. What should you do?',a:['Decline and contact the organisation using a trusted channel','Install it while they wait','Share your screen and banking app'],c:0,why:'Unsolicited remote-access requests can expose your device and accounts.'}
-];
-let escapeStep=0;
-function renderEscape(){const host=$('escapeArea');if(escapeStep>=missions.length){host.innerHTML='<div class="feedback"><b>🔓 Exit unlocked!</b><p>You completed all three safety checkpoints.</p><button class="btn small" id="escapeAgain">Play again</button></div>';$('escapeAgain').onclick=()=>{escapeStep=0;renderEscape()};return}const q=missions[escapeStep];host.innerHTML='<span class="pill">Checkpoint '+(escapeStep+1)+' of 3</span><p><b>'+q.q+'</b></p>'+q.a.map((a,i)=>'<button class="choice" data-e="'+i+'">'+escapeHtml(a)+'</button>').join('')+'<div id="escapeFeedback"></div>';host.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{const ok=Number(b.dataset.e)===q.c;$('escapeFeedback').innerHTML='<div class="feedback">'+(ok?'Correct — checkpoint cleared.':'Not quite. Review the safe choice and try again.')+'<p>'+q.why+'</p>'+(ok?'<button class="btn small" id="escapeNext">Continue</button>':'')+'</div>';if(ok)$('escapeNext').onclick=()=>{escapeStep++;renderEscape()}})}
-renderEscape();
-const cases=[
-{title:'The urgent parcel fee',clues:['Unexpected delivery fee request','Link does not match the courier’s known domain','Message pressures you to pay immediately'],question:'Which combination is the strongest reason to pause?',answers:['Urgency, an unexpected fee and an unfamiliar domain','The message uses a delivery logo','The message arrived during daytime'],correct:0,explain:'The combined request, pressure and unfamiliar destination are meaningful warning signs. Logos and timing do not prove legitimacy.'},
-{title:'The prize notification',clues:['You did not enter a contest','A processing fee is requested','A password is requested to claim the prize'],question:'What should the recipient do?',answers:['Pay the fee and claim it','Do not pay or share credentials; verify through an independent official source','Send the message to more people'],correct:1,explain:'Unexpected prizes that require fees or credentials should be treated cautiously and independently verified.'}
-];
-let detectiveIndex=0;
-function renderDetective(){const c=cases[detectiveIndex];$('detectiveArea').innerHTML='<h4>'+c.title+'</h4><ul class="list">'+c.clues.map(x=>'<li>'+x+'</li>').join('')+'</ul><b>'+c.question+'</b>'+c.answers.map((x,i)=>'<button class="choice" data-d="'+i+'">'+x+'</button>').join('')+'<div id="detectiveFeedback"></div>';document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{const ok=Number(b.dataset.d)===c.correct;$('detectiveFeedback').innerHTML='<div class="feedback">'+(ok?'Case solved!':'Review the clues and try again.')+'<p>'+c.explain+'</p>'+(ok?'<button class="btn small" id="nextCase">Next case</button>':'')+'</div>';if(ok){award(5,'detective');$('nextCase').onclick=()=>{detectiveIndex=(detectiveIndex+1)%cases.length;renderDetective()}}})}
-renderDetective();
-const arenaQs=[
-{q:'Which statement about HTTPS is accurate?',a:['It proves a shop is genuine','It encrypts the connection but does not prove the site is trustworthy','It prevents every type of scam'],c:1},
-{q:'What should you do with an unexpected OTP request?',a:['Share it with the caller','Post it in a group chat','Never share it; verify the request independently'],c:2},
-{q:'What is a safer way to reach your bank?',a:['Use the official app or a number from your bank card','Use a link sent by an unknown caller','Search for a number in a suspicious pop-up'],c:0}
-];
-let arenaIndex=0,arenaScore=0,arenaDone=false;
-function renderArena(){if(arenaDone){$('arenaArea').innerHTML='<h4>Round complete</h4><div class="stat">'+arenaScore+' / '+arenaQs.length+'</div><p>Classroom practice score on this device.</p><button class="btn small" id="arenaRestart">Start new round</button>';$('arenaRestart').onclick=()=>{arenaIndex=0;arenaScore=0;arenaDone=false;renderArena()};return}const q=arenaQs[arenaIndex];$('arenaArea').innerHTML='<span class="pill">Question '+(arenaIndex+1)+' / '+arenaQs.length+'</span><p><b>'+q.q+'</b></p>'+q.a.map((a,i)=>'<button class="choice" data-a="'+i+'">'+a+'</button>').join('')+'<div id="arenaFeedback"></div>';document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const ok=Number(b.dataset.a)===q.c;if(ok)arenaScore++;metrics.quiz++;saveMetrics();$('arenaFeedback').innerHTML='<div class="feedback">'+(ok?'Good decision!':'Review this safety point.')+'<p>'+(q.c===1?'HTTPS protects the connection, not the honesty of the website.':q.c===2?'An OTP is private and must not be shared.':'Use a contact method you already know is genuine.')+'</p><button class="btn small" id="arenaNext">Next</button></div>';document.querySelectorAll('[data-a]').forEach(x=>x.disabled=true);$('arenaNext').onclick=()=>{arenaIndex++;if(arenaIndex>=arenaQs.length)arenaDone=true;renderArena()}})}
-renderArena();
-const museum=[
-['Impersonation message','A message pretends to be from a known organisation and demands urgent action.','Check the sender and contact the organisation through a known channel.'],
-['Advance-fee prize','A supposed reward requires a payment before it can be collected.','Do not pay to claim an unexpected prize. Verify independently.'],
-['Fake support request','An unknown person asks for a code or remote access to fix a problem.','Never share authentication codes or grant access to an unsolicited caller.'],
-['Lookalike shop','A store uses a familiar brand name with an altered domain.','Inspect the exact domain and verify the seller, return policy and payment protections.']
-];
-$('museumArea').innerHTML=museum.map((m,i)=>'<details class="feedback"><summary><b>'+m[0]+'</b></summary><p>'+m[1]+'</p><p><b>Safety lesson:</b> '+m[2]+'</p></details>').join('');
-const pw=$('pwInput');
-function scorePassword(s){if(!s)return{n:0,label:'Enter a sample to see guidance.',tips:[]};let n=0,tips=[];if(s.length>=14)n+=2;else if(s.length>=10)n++;else tips.push('Use a longer passphrase.');if(/[a-z]/.test(s)&&/[A-Z]/.test(s))n++;else tips.push('Mix letter cases if it helps you remember safely.');if(/[0-9]/.test(s))n++;if(/[^A-Za-z0-9]/.test(s))n++;if(/(.)\1{2,}/.test(s)) {n=Math.max(0,n-1);tips.push('Avoid repeated character patterns.')}if(/password|qwerty|123456|letmein|admin/i.test(s)){n=0;tips.push('Avoid common words and predictable sequences.')}return{n,label:n>=5?'Stronger sample pattern':n>=3?'Moderate sample pattern':'Needs improvement',tips:tips}}
-function renderPw(){const s=pw.value,r=scorePassword(s);$('pwMeter').style.width=(r.n/5*100)+'%';$('pwResult').textContent=r.label+(r.tips.length?' · '+r.tips.join(' '):' · Use a unique password and a password manager.');}
-pw.oninput=renderPw;$('pwShow').onchange=e=>pw.type=e.target.checked?'text':'password';
-const privacyItems=['My social accounts are private or reviewed regularly.','I use different passwords for important accounts.','I have enabled multi-factor authentication where available.','I avoid posting live location, school/work details or travel plans publicly.','I review app permissions and remove access I no longer need.','I know how to report and block suspicious accounts.'];
-$('privacyQuestions').innerHTML=privacyItems.map((x,i)=>'<label class="checkrow"><input type="checkbox" class="privacyCheck"><span>'+x+'</span></label>').join('');
-$('privacyScore').onclick=()=>{const n=document.querySelectorAll('.privacyCheck:checked').length;$('privacyResult').classList.remove('hidden');$('privacyResult').innerHTML='<b>'+n+' of '+privacyItems.length+' habits selected.</b><p>'+(n===6?'Great checklist coverage. Review settings periodically.':'Choose one unchecked habit and improve it this week. These are self-reported answers, not a security audit.')+'</p>'};
-const footprintItems=['First name and surname','School or workplace name','Public birthday details','Regular locations or check-ins','Pet name or favourite team','Photos showing badges, addresses or documents'];
-$('footprintOptions').innerHTML=footprintItems.map((x,i)=>'<label class="checkrow"><input type="checkbox" class="footCheck"><span>'+x+'</span></label>').join('');
-$('footprintRun').onclick=()=>{const n=document.querySelectorAll('.footCheck:checked').length;$('footprintResult').classList.remove('hidden');$('footprintResult').innerHTML='<b>'+n+' information categories selected.</b><p>'+(n>=4?'Several separate details can create a more revealing picture when combined. Consider limiting public visibility.':n>=2?'Even a few details can become identifying when combined. Review what is public.':'Fewer selected details reduce what this simple simulation can illustrate. Review each post before sharing.')+'</p><p class="smallprint">This is an educational illustration. It does not identify you, search the internet or estimate your actual exposure.</p>'};
-$('shopCheck').onclick=()=>{const raw=$('shopUrl').value.trim(),out=$('shopResult');out.classList.remove('hidden');if(!raw){out.textContent='Enter a shop URL first.';return}let u;try{u=new URL(raw.includes('://')?raw:'https://'+raw)}catch(e){out.textContent='That URL could not be parsed. Check the spelling.';return}let flags=[];if(u.protocol!=='https:')flags.push('The URL does not use HTTPS.');if(u.username||u.password)flags.push('The URL contains embedded credentials.');if(u.hostname.includes('xn--'))flags.push('The domain uses punycode.');if(/^\d{1,3}(\.\d{1,3}){3}$/.test(u.hostname))flags.push('The host is a raw IP address.');if(u.hostname.split('.').length>4)flags.push('The subdomain chain is unusually long.');if(/sale|deal|discount|shop|store/i.test(u.hostname)&&u.hostname.length>35)flags.push('The domain contains promotional terms and is unusually long; inspect carefully.');out.innerHTML='<b>Host:</b> '+escapeHtml(u.hostname)+(flags.length?'<ul class="list">'+flags.map(x=>'<li>'+escapeHtml(x)+'</li>').join('')+'</ul>':'<p>No configured URL warning matched.</p>')+'<p>Also verify independent reviews, contact details, return/refund policy and payment options. Never rely on a URL score alone.</p>'};
-const helpText={message:'Do not click links or reply with personal information. Verify the sender through a contact method you already trust. If you shared a password or code, tell a trusted adult and secure the account from its official app or website.',payment:'Pause. Do not transfer money under pressure, share an OTP or install an app for a caller. Contact your bank/payment provider using its official app or the number on your card.',account:'Use a trusted device to change the password through the official service, sign out other sessions, enable multi-factor authentication and contact the provider. Tell a trusted adult if you need help.',shopping:'Check the exact domain, independent seller reviews, contact information, return policy and payment protections. HTTPS alone does not prove a shop is genuine.',adult:'In India, suspected cyber financial fraud can be reported promptly by calling 1930 and contacting your bank/payment provider. The official portal is cybercrime.gov.in. Preserve transaction references and messages; never pay anyone promising guaranteed recovery.'};
-const assistantHistory=[];
-const helpQuestions={
- message:'I received a suspicious message. How should I check it safely?',
- payment:'Someone is asking me to make a payment. What should I do safely?',
- account:'I think my online account may be compromised. What steps should I take?',
- shopping:'I am unsure whether an online shop is genuine. How can I assess it?',
- adult:'How can I report a suspected cybercrime in India?'
-};
-async function askCyberShieldAI(question){
- const out=$('assistantAnswer');
- const q=String(question||'').trim();
- if(!q){out.textContent='Type a question first.';return}
- if(q.length>1500){out.textContent='Please keep your question under 1,500 characters.';return}
- const button=$('askAssistant');
- button.disabled=true;
- button.textContent='Thinking…';
- out.textContent='CyberShield AI is preparing a safety-focused answer…';
- assistantHistory.push({role:'user',content:q});
- try{
-  const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:assistantHistory.slice(-10)})});
-  const data=await response.json().catch(()=>({}));
-  if(!response.ok) throw new Error(data.error||'The AI service could not answer right now.');
-  const answer=String(data.answer||'').trim();
-  if(!answer) throw new Error('The AI service returned an empty answer. Please try again.');
-  assistantHistory.push({role:'assistant',content:answer});
-  if(assistantHistory.length>12) assistantHistory.splice(0,assistantHistory.length-12);
-  out.textContent=answer;
- }catch(error){
-  assistantHistory.pop();
-  const safeMessage=error && typeof error.message==='string' ? error.message : '';
-  out.textContent=(safeMessage && safeMessage.length<300 ? safeMessage : 'CyberShield AI is temporarily unavailable. Please try again later.')+' You can still use the other CyberShield safety tools.';
- }finally{
-  button.disabled=false;
-  button.textContent='Ask CyberShield AI';
- }
+/* 7. CYBERSHIELD ESCAPE ROOM */
+function submitEscapeAnswer() {
+    const answer = document.getElementById("escapeAnswer").value.trim().toLowerCase();
+    const result = document.getElementById("escapeResult");
+    if (!answer) {
+        result.textContent = "Please enter your answer.";
+        return;
+    }
+    if (answer === "phishing") {
+        result.textContent = "Correct! Level completed.";
+        result.style.color = "#35e0c1";
+    } else {
+        result.textContent = "Incorrect. Try again.";
+        result.style.color = "#ff6464";
+    }
 }
-document.querySelectorAll('[data-help]').forEach(b=>b.onclick=()=>{const q=helpQuestions[b.dataset.help];$('assistantQuestion').value=q;askCyberShieldAI(q)});
-$('askAssistant').onclick=()=>askCyberShieldAI($('assistantQuestion').value);
-$('assistantQuestion').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();askCyberShieldAI($('assistantQuestion').value)}});
 
-function updateCert(){const completed=(progress.lessons||[]).length,quizzes=(progress.quizzes||[]).length;$('certProgress').textContent='Progress: '+completed+'/4 lessons completed · '+quizzes+' daily quiz entries. Complete all four lessons and at least one quiz to unlock the certificate.'}
-const oldRenderDashboard=renderDashboard;renderDashboard=function(){oldRenderDashboard();updateCert()};
-updateCert();
-$('makeCertificate').onclick=()=>{const name=$('certName').value.trim();if(!name){alert('Enter a name for the certificate.');return}if((progress.lessons||[]).length<4||(progress.quizzes||[]).length<1){alert('Complete all four academy lessons and at least one daily quiz first.');return}$('certDisplayName').textContent=name;$('certDate').textContent='Completed on '+new Date().toLocaleDateString();$('certificatePreview').classList.remove('hidden')};
+/* 8. CYBERSHIELD AI ASSISTANT */
+async function sendAssistantMessage() {
+    const input = document.getElementById("assistantInput");
+    const result = document.getElementById("assistantResult");
+    const message = input.value.trim();
+    if (!message) {
+        result.textContent = "Please enter your question.";
+        return;
+    }
+    result.textContent = "CyberShield AI is thinking...";
+    try {
+        // This repository has /api/chat (not /api/assistant).
+        const response = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages: [{ role: "user", content: message }] })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Assistant request failed.");
+        result.textContent = data.answer || "The assistant returned an empty response.";
+    } catch (error) {
+        console.error("AI Assistant error:", error);
+        result.textContent = "Unable to connect to CyberShield AI. Check that the AI service is configured, then try again.";
+    }
+}
+
+/* Connect the controls to their functions */
+document.getElementById("checkPasswordBtn").addEventListener("click", checkPassword);
+document.getElementById("detectScamBtn").addEventListener("click", detectScam);
+document.getElementById("analyzeEmailBtn").addEventListener("click", analyzeEmail);
+document.getElementById("inspectShopBtn").addEventListener("click", inspectShopURL);
+document.getElementById("submitEscapeBtn").addEventListener("click", submitEscapeAnswer);
+document.getElementById("sendAssistantBtn").addEventListener("click", sendAssistantMessage);
 
 </script>
 </body></html>
