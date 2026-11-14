@@ -97,7 +97,7 @@ function checkPassword() {
     else feedback.push("Include numbers.");
     if (/[^A-Za-z0-9]/.test(password)) score++;
     else feedback.push("Include special characters.");
-    if (/(.)\\1{2,}/.test(password)) {
+    if (/(.)\1{2,}/.test(password)) {
         score--;
         feedback.push("Avoid repeated characters.");
     }
@@ -139,13 +139,13 @@ function detectScam() {
     let score = 0;
     let warnings = [];
     const patterns = [
-        { regex: /\\burgent\\b|immediately|act now|limited time/i, points: 15, warning: "Urgent or pressure-based language detected." },
+        { regex: /\burgent\b|immediately|act now|limited time/i, points: 15, warning: "Urgent or pressure-based language detected." },
         { regex: /free prize|won a lottery|claim your reward|lucky winner/i, points: 25, warning: "Suspicious prize or lottery claims." },
         { regex: /verify your account|account suspended|account blocked/i, points: 25, warning: "Possible account phishing attempt." },
         { regex: /send password|share your otp|reveal your pin/i, points: 35, warning: "Requests sensitive security information." },
         { regex: /send money|processing fee|pay immediately/i, points: 25, warning: "Suspicious payment request." },
         { regex: /bank details|upi pin|credit card details/i, points: 30, warning: "Sensitive financial information requested." },
-        { regex: /click here|bit\\.ly|tinyurl\\.com/i, points: 15, warning: "Potentially suspicious link detected." }
+        { regex: /click here|bit\.ly|tinyurl\.com/i, points: 15, warning: "Potentially suspicious link detected." }
     ];
     patterns.forEach(item => {
         if (item.regex.test(text)) {
@@ -182,7 +182,7 @@ function analyzeEmail() {
         { regex: /share your otp|upi pin|bank password|card details/gi, points: 35, message: "Requests sensitive financial information." },
         { regex: /won a prize|lottery winner|claim your reward/gi, points: 25, message: "Suspicious reward or lottery claim." },
         { regex: /send money|processing fee|payment required/gi, points: 25, message: "Suspicious payment request." },
-        { regex: /click here|bit\\.ly|tinyurl\\.com/gi, points: 15, message: "Potentially suspicious link." }
+        { regex: /click here|bit\.ly|tinyurl\.com/gi, points: 15, message: "Potentially suspicious link." }
     ];
     patterns.forEach(item => {
         if (item.regex.test(email)) {
@@ -191,7 +191,7 @@ function analyzeEmail() {
         }
         item.regex.lastIndex = 0;
     });
-    const urls = email.match(/https?:\\/\\/[^\\s<>"']+/gi) || [];
+    const urls = email.match(/https?:\/\/[^\s<>"']+/gi) || [];
     urls.forEach(link => {
         try {
             const parsed = new URL(link);
@@ -207,7 +207,7 @@ function analyzeEmail() {
             warnings.push("An invalid URL was found.");
         }
     });
-    if (sender && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(sender)) {
+    if (sender && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sender)) {
         score += 15;
         warnings.push("Sender email address has an invalid format.");
     }
@@ -232,7 +232,7 @@ function inspectShopURL() {
     }
     let url;
     try {
-        url = new URL(/^https?:\\/\\//i.test(input) ? input : "https://" + input);
+        url = new URL(/^https?:\/\//i.test(input) ? input : "https://" + input);
         if (!["http:", "https:"].includes(url.protocol)) throw new Error("Unsupported protocol");
     } catch {
         result.textContent = "Invalid website URL. Please check your input.";
@@ -245,7 +245,7 @@ function inspectShopURL() {
         score += 20;
         warnings.push("Website does not use HTTPS.");
     }
-    if (/^(\\d{1,3}\\.){3}\\d{1,3}$/.test(domain)) {
+    if (/^(\d{1,3}\.){3}\d{1,3}$/.test(domain)) {
         score += 30;
         warnings.push("Website uses an IP address instead of a domain name.");
     }
